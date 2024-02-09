@@ -32,5 +32,4 @@ const chatName = mongoose.Schema(
 
 const Chat = mongoose.model("Chat", chatName)
 
-// module.exports = Chat;
-export default Chat;
+module.exports = Chat;

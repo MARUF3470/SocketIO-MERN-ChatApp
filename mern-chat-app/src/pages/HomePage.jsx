@@ -1,3 +1,4 @@
+import { useEffect, useState } from "react";
 import Login from "../components/authentication/Login";
 import Registration from "../components/authentication/Registration";
 import "./HomePage.css";
@@ -11,7 +12,17 @@ import {
   TabPanel,
   Tabs,
 } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 const HomePage = () => {
+  const [user, setUser] = useState();
+  const navigate = useNavigate();
+  useEffect(() => {
+    const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+    setUser(userInfo);
+    if (user) {
+      navigate("/messages", { replace: true });
+    }
+  }, [navigate, user]);
   return (
     <div className="HomePage">
       <Container maxW="xl" centerContent>

@@ -11,12 +11,14 @@ connectDB()
 const userRoutes = require('./routes/userRoutes');
 const { notFound, errorHandler } = require('./middleware/errorMiddleware');
 
+const chatRoutes = require('./routes/chatRoutes');
 
 app.get('/', (req, res) => {
     res.send('Hello World!')
 })
 
 app.use('/api/user', userRoutes)
+app.use('/api/chat', chatRoutes)
 
 app.use(notFound)
 app.use(errorHandler)

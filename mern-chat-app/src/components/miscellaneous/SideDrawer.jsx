@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 /* eslint-disable react/prop-types */
 import {
   Avatar,
@@ -14,33 +15,35 @@ import {
 import { useState } from "react";
 import { IoIosSearch } from "react-icons/io";
 import { BellIcon, ChevronDownIcon } from "@chakra-ui/icons";
+import ProfileModal from "./ProfileModal";
+import { useNavigate } from "react-router-dom";
+import SearchDrawer from "./SearchDrawer";
 const SideDrawer = ({ user }) => {
-  const [search, setSearch] = useState("");
-  const [searchResult, setSearchResult] = useState([]);
-  const [loading, setLoading] = useState(false);
-  const [loadingChat, setLoadingChat] = useState(false);
-  console.log(user);
+  const navigate = useNavigate();
+  const logOutHandler = () => {
+    localStorage.removeItem("userInfo");
+    navigate("/", { replace: true });
+  };
   return (
     <>
       <Box
         display="flex"
         justifyContent="space-between"
         alignItems="center"
-        bg="transparent"
+        bgGradient="linear(to-l, #7928CA, #FF0080)"
         w="100%"
         p="5px 10px 5px 10px"
-        borderWidth="2px"
         borderRadius="10px"
       >
         <Tooltip label="Search Users to chat" hasArrow placement="bottom-end">
-          <Button variant="ghost">
+          <SearchDrawer user={user}>
             <IoIosSearch color="white" />
             <Text display={{ base: "none", md: "flex" }} color="white" px={4}>
               Search User
             </Text>
-          </Button>
+          </SearchDrawer>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="Poppins">
+        <Text fontSize="3xl" color="white" fontFamily="Poppins">
           Create Moments
         </Text>
         <div>
@@ -48,13 +51,6 @@ const SideDrawer = ({ user }) => {
             <MenuButton p={1}>
               <BellIcon textColor="white" fontSize="2xl" m={1} />
             </MenuButton>
-            {/* <MenuList>
-            <MenuItem>Download</MenuItem>
-            <MenuItem>Create a Copy</MenuItem>
-            <MenuItem>Mark as Draft</MenuItem>
-            <MenuItem>Delete</MenuItem>
-            <MenuItem>Attend a Workshop</MenuItem>
-          </MenuList> */}
           </Menu>
           <Menu>
             <MenuButton as={Button} p={1} rightIcon={<ChevronDownIcon />}>
@@ -66,9 +62,11 @@ const SideDrawer = ({ user }) => {
               />
             </MenuButton>
             <MenuList>
-              <MenuItem>My Profile</MenuItem>
+              <ProfileModal user={user}>
+                <MenuItem>My Profile</MenuItem>
+              </ProfileModal>
               <MenuDivider />
-              <MenuItem>Logout</MenuItem>
+              <MenuItem onClick={logOutHandler}>Logout</MenuItem>
             </MenuList>
           </Menu>
         </div>

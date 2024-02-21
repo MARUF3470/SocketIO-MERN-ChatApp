@@ -4,9 +4,9 @@ import router from "./routes/Router";
 
 function App() {
   return (
-    <>
+    <div style={{ fontFamily: "poppins" }}>
       <RouterProvider router={router} />
-    </>
+    </div>
   );
 }
 

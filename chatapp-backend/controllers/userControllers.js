@@ -4,7 +4,7 @@ const generateToken = require('../config/generateToken');
 
 const registerUser = asyncHandler(async (req, res) => {
     const { name, email, password, pic } = req.body;
-    console.log();
+
     if (!name, !email, !password) {
         res.status(400)
         throw new Error('Please fill all fields')
@@ -38,7 +38,7 @@ const registerUser = asyncHandler(async (req, res) => {
 const authUser = asyncHandler(async (req, res) => {
     const { email, password } = req.body;
     const user = await User.findOne({ email })
-    console.log(user);
+
     if (user && (await user.matchPassword(password))) {
         res.json({
             _id: user._id,
@@ -65,7 +65,7 @@ const allUsers = asyncHandler(async (req, res) => {
     // give all the users name which we will search excepts the currently login user
     const users = await User.find(keyword).find({ _id: { $ne: req.user._id } })
     res.send(users)
-    // console.log(keyword);
+
 
 })
 

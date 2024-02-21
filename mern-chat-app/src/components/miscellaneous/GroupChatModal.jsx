@@ -62,8 +62,55 @@ const GroupChatModal = ({ children }) => {
       });
     }
   };
-  const handleSubmit = () => {};
-  const handleDelete = () => {};
+  const handleSubmit = async () => {
+    console.log("dasdasd");
+    if (!groupChatName || !selectedUsers) {
+      toast({
+        title: "Pleace filled all the field",
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+    try {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+      const { data } = await axios.post(
+        `http://localhost:5000/api/chat/group`,
+        {
+          name: groupChatName,
+          users: JSON.stringify(selectedUsers.map((u) => u._id)),
+        },
+        config
+      );
+      setChats([data, ...chats]);
+      onClose();
+      console.log("vdfdfsdsD", data);
+      toast({
+        title: "New group chat created",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: error.response.data,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom-left",
+      });
+    }
+  };
+  const handleDelete = (duser) => {
+    setSelectedUsers(selectedUsers.filter((user) => user._id !== duser._id));
+  };
   const handleGroup = (userToAdd) => {
     if (selectedUsers.includes(userToAdd)) {
       toast({
@@ -120,7 +167,7 @@ const GroupChatModal = ({ children }) => {
                   <UserListItem
                     key={user._id}
                     user={user}
-                    handleFunction={() => handleGroup(user._id)}
+                    handleFunction={() => handleGroup(user)}
                   />
                 ))
             )}

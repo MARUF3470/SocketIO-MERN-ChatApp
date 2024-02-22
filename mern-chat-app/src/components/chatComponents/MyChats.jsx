@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import { useEffect, useState } from "react";
 import { ChatState } from "../../context/ChatProvider";
 import { Box, Button, Stack, Text, useToast } from "@chakra-ui/react";
@@ -6,10 +7,12 @@ import ChatLoading from "./ChatLoading";
 import { AddIcon } from "@chakra-ui/icons";
 import { getSender } from "../../config/ChatLogics";
 import GroupChatModal from "../miscellaneous/GroupChatModal";
-const MyChats = () => {
+const MyChats = ({ fetchAgain }) => {
   const [loggedUser, setLoggedUser] = useState();
   const { chats, setChats, selectedChatData, setSelectedChatData, user } =
     ChatState();
+  console.log("mychat", selectedChatData);
+  console.log("mychat", chats);
   const toast = useToast();
   const fetchChats = async () => {
     try {
@@ -38,7 +41,7 @@ const MyChats = () => {
   useEffect(() => {
     setLoggedUser(JSON.parse(localStorage.getItem("userInfo")));
     fetchChats();
-  }, []);
+  }, [fetchAgain]);
   return (
     <Box
       display={{ base: selectedChatData ? "none" : "flex", md: "flex" }}

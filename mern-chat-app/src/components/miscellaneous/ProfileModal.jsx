@@ -64,6 +64,7 @@ const ProfileModal = ({ user, children }) => {
           </ModalFooter>
         </ModalContent>
       </Modal>
+      {/* going to work on this project tomorrow after coming back from university */}
     </>
   );
 };
